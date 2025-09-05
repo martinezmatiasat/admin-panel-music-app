@@ -1,33 +1,30 @@
 import { useState } from 'react';
-import axios from 'axios';
 import { useNavigate, Navigate } from 'react-router-dom';
+import api from '@/api/api';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
-
     try {
-      const res = await axios.post('http://localhost:3000/api/auth/login', {
-        email,
-        password,
-      });
-
-      const { token } = res.data;
-      localStorage.setItem('token', token);
+      await api.post('/admin/login', { email, password });
+      setIsAuthenticated(true);
       navigate('/albums');
     } catch (err) {
-      setError('Credenciales inválidas');
+      setIsAuthenticated(false);
+      setError(err.response?.data?.message || 'Error en la solicitud');
+      console.error(err);
     }
   };
 
-  if (localStorage.getItem('token')) {
-    return <Navigate to="/" />
+  if (isAuthenticated) {
+    return <Navigate to="/" />;
   }
 
   return (

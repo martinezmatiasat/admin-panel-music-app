@@ -25,8 +25,8 @@ const Sidebar = () => {
             </NavLink>
           </li>
           <li className="mt-4">
-            <NavLink to="/users" className={linkClass}>
-              Usuarios
+            <NavLink to="/admin" className={linkClass}>
+              Admin
             </NavLink>
           </li>
         </ul>

@@ -1,30 +1,21 @@
 import { useState } from 'react';
 import { useNavigate, Navigate } from 'react-router-dom';
-import api from '@/api/api';
+import { useSession } from '@/context/SessionContext';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState(null);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const { login, isLoggedIn } = useSession();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError(null);
-    try {
-      await api.post('/admin/login', { email, password });
-      setIsAuthenticated(true);
-      navigate('/albums');
-    } catch (err) {
-      setIsAuthenticated(false);
-      setError(err.response?.data?.message || 'Error en la solicitud');
-      console.error(err);
-    }
+    const result = await login(email, password);
+    if (result.success) navigate('/albums');
   };
 
-  if (isAuthenticated) {
-    return <Navigate to="/" />;
+  if (isLoggedIn) {
+    return <Navigate to="/albums" />;
   }
 
   return (
@@ -34,10 +25,6 @@ const Login = () => {
         className="bg-gray-800 p-8 rounded shadow-md w-full max-w-sm space-y-4"
       >
         <h2 className="text-2xl font-bold text-center">Iniciar sesión</h2>
-
-        {error && (
-          <div className="bg-red-500 text-white p-2 rounded">{error}</div>
-        )}
 
         <div>
           <label className="block mb-1">Email</label>

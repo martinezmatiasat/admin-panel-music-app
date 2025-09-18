@@ -2,9 +2,14 @@ import { useState } from "react";
 import DataTable from "react-data-table-component";
 import Icon from "@/components/Icon";
 
-const PageContent = ({ title, actions, items, columns, tableActions }) => {
+const PageContent = ({ title, columns, items = [], actions = [], tableActions = [] }) => {
   const [search, setSearch] = useState('');
 
+  /**
+   * Añade una columna de acciones a la tabla si se proporcionan acciones de tabla
+   * Cada acción se representa como un botón con un icono y una función de callback
+   * Props de las columnas: name, selector, sortable, width.
+   */
   const columnsWithTableActions = [
     ...columns,
     {
@@ -77,7 +82,7 @@ const PageContent = ({ title, actions, items, columns, tableActions }) => {
             <button
               key={index}
               onClick={action.callback}
-              className="flex items-center gap-2 bg-blue-500 text-white px-4 py-2 rounded"
+              className="flex items-center gap-2 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700"
             >
               <Icon name={action.iconName} />
               {action.label}

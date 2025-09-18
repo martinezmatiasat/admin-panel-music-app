@@ -19,6 +19,21 @@ const Icon = ({ name }) => {
         </svg>
 
       );
+    case 'save':
+      return (
+        <svg className="w-5 h-5 size-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+          <rect x="3" y="3" width="18" height="18" rx="2" fill="none" stroke="currentColor" strokeWidth="1.5" />
+          <rect x="7" y="15" width="10" height="4" rx="1" fill="none" stroke="currentColor" strokeWidth="1.5" />
+          <rect x="7" y="7" width="6" height="5" rx="0.5" fill="none" stroke="currentColor" strokeWidth="1.5" />
+          <path d="M17 7v5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+        </svg>
+      );
+    case 'cancel':
+      return (
+        <svg className="w-5 h-5 size-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      );
     default:
       return null;
   }

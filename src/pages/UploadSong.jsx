@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import api from '@api/api';
-import { notifySuccess, notifyError } from '@/helpers/notification';
+import { notifySuccess } from '@/utils/notification';
 
 function UploadSong() {
   const [file, setFile] = useState(null);
@@ -15,12 +15,8 @@ function UploadSong() {
     formData.append('artistId', artistId);
     formData.append('file', file); // ¡el campo debe coincidir con el backend!
 
-    try {
-      await api.post('/songs/upload', formData); // sin headers
-      notifySuccess('Canción subida con éxito');
-    } catch (err) {
-      notifyError(err);
-    }
+    const { data } = await api.post('/songs/upload', formData);
+    notifySuccess(data.message);
   };
 
   return (

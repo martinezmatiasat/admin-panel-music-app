@@ -13,7 +13,7 @@ const Users = () => {
       nickname: 'juanp',
       email: 'juan@example.com',
       role: 'admin',
-      image: 'https://randomuser.me/api/portraits/men/1.jpg',
+      image: 'https://randomuser.me/utils/portraits/men/1.jpg',
     },
     {
       _id: '2',
@@ -22,7 +22,7 @@ const Users = () => {
       nickname: 'mariag',
       email: 'maria@example.com',
       role: 'user',
-      image: 'https://randomuser.me/api/portraits/women/2.jpg',
+      image: 'https://randomuser.me/utils/portraits/women/2.jpg',
     },
     {
       _id: '3',
@@ -31,7 +31,7 @@ const Users = () => {
       nickname: 'pedrol',
       email: 'pedro@example.com',
       role: 'user',
-      image: 'https://randomuser.me/api/portraits/men/3.jpg',
+      image: 'https://randomuser.me/utils/portraits/men/3.jpg',
     },
   ]; */
 

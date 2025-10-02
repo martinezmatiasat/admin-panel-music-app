@@ -23,19 +23,13 @@ const Albums = () => {
   }
 
   const editAlbum = async (id) => {
-    const { data } = await api.put(`/albums/${id}`, {
-      /* datos del álbum editado */
-    });
-    notifySuccess(data.message);
-    setAlbums(albums.map(album => album.id === id ? data.result : album));
-    navigate('/albums');
+    navigate(`/albums/edit/${id}`);
   };
 
   const deleteAlbum = async (id) => {
     const { data } = await api.delete(`/albums/${id}`);
     notifySuccess(data.message);
-    setAlbums(albums.filter(album => album.id !== id));
-    navigate('/albums');
+    setAlbums(albums.filter(album => album._id !== id));
   };
 
   const columns = [

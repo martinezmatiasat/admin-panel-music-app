@@ -28,8 +28,7 @@ const Artists = () => {
   const deleteArtist = async (id) => {
     const { data } = await api.delete(`/artists/${id}`);
     notifySuccess(data.message);
-    setArtists(artists.filter(artist => artist.id !== id));
-    navigate('/artists');
+    setArtists(artists.filter(artist => artist._id !== id));
   };
 
   const columns = [
@@ -52,12 +51,12 @@ const Artists = () => {
     {
       label: 'Editar',
       iconName: 'edit',
-      callback: (id) => editArtist(id),
+      callback: (row) => editArtist(row._id),
     },
     {
       label: 'Eliminar',
       iconName: 'delete',
-      callback: (id) => deleteArtist(id),
+      callback: (row) => deleteArtist(row._id),
     },
   ];
 

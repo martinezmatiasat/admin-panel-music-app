@@ -1,11 +1,14 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import api from '@/utils/api';
 import { notifySuccess } from '@/utils/notification';
 import { useNavigate } from 'react-router-dom';
 import Icon from '@/components/Icon';
 import ArtistSelect from '@/components/ArtistSelect';
+import { useParams } from 'react-router-dom';
 
-const CreateAlbum = () => {
+const EditAlbum = () => {
+  const { albumId } = useParams();
+
   const [album, setAlbum] = useState({
     title: '',
     artist: '',
@@ -15,25 +18,36 @@ const CreateAlbum = () => {
     songs: [],
   });
 
+  useEffect(() => {
+    fetchAlbum();
+  }, []);
+
+  const fetchAlbum = async () => {
+    const { data } = await api.get(`/albums/${albumId}`);
+    setAlbum(data.result);
+  };
+
   const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setAlbum({ ...album, [name]: value });
+    setAlbum((album) => ({ ...album, [name]: value }));
   };
 
   const handleFileChange = (e) => {
-    setAlbum({ ...album, image: e.target.files[0] });
+    setAlbum((album) => ({ ...album, image: e.target.files[0] }));
   };
 
   const handleArtistChange = (value) => {
-    setAlbum({ ...album, artist: value });
+    console.log(value);
+    setAlbum((album) => ({ ...album, artist: value }));
   };
 
   const handleSongChange = (index, value) => {
-    setAlbum({ 
-      ...album, 
-      songs: album.songs.map((song, i) => (i === index ? value : song))
+    setAlbum((album) => {
+      const updatedSongs = [...album.songs];
+      updatedSongs[index] = value;
+      return { ...album, songs: updatedSongs };
     });
   };
 
@@ -42,20 +56,20 @@ const CreateAlbum = () => {
 
     const formData = new FormData();
     formData.append('title', album.title);
-    formData.append('artist', album.artist);
+    formData.append('artist', album.artist._id);
     formData.append('description', album.description);
     formData.append('year', album.year);
     formData.append('image', album.image);
     formData.append('songs', JSON.stringify(album.songs));
 
-    const { data } = await api.post('/albums', formData);
+    const { data } = await api.patch(`/albums/${albumId}`, formData);
     notifySuccess(data.message);
     navigate('/albums');
   };
 
   return (
     <div>
-      <h2 className="text-2xl font-bold mb-4">Crear Álbum</h2>
+      <h2 className="text-2xl font-bold mb-4">Editar Álbum</h2>
       <form className="mt-4 space-y-4" onSubmit={handleSubmit}>
         <div>
           <label className="block mb-1">Nombre del Álbum</label>
@@ -124,4 +138,4 @@ const CreateAlbum = () => {
   );
 };
 
-export default CreateAlbum;
+export default EditAlbum;

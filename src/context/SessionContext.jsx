@@ -1,4 +1,4 @@
-import { createContext, useState, useContext, useEffect } from 'react';
+import { createContext, useState, useContext, useEffect, useRef } from 'react';
 import api from '@/utils/api';
 
 const SessionContext = createContext();
@@ -9,10 +9,7 @@ const SessionProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [accessToken, setAccessToken] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    refreshSession();
-  }, []);
+  const timer = useRef();
 
   const login = async (email, password) => {
     try {
@@ -51,6 +48,30 @@ const SessionProvider = ({ children }) => {
       setIsLoading(false);
     }
   };
+
+  const resetTimer = () => {
+    clearTimeout(timer.current);
+    timer.current = setTimeout(logout, 60 * 60 * 1000);
+  };
+
+  useEffect(() => {
+    refreshSession();
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener('mousemove', resetTimer);
+    window.addEventListener('keydown', resetTimer);
+    window.addEventListener('click', resetTimer);
+
+    resetTimer();
+
+    return () => {
+      clearTimeout(timer.current);
+      window.removeEventListener('mousemove', resetTimer);
+      window.removeEventListener('keydown', resetTimer);
+      window.removeEventListener('click', resetTimer);
+    };
+  }, []);
 
   const isLoggedIn = !!user;
 

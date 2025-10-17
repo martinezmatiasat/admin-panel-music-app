@@ -1,10 +1,10 @@
-import Select from 'react-select';
 import { useState, useEffect } from 'react';
 import api from '@/utils/api';
+import Select from 'react-select';
 
 const ArtistSelect = ({ value, onChange }) => {
   const [options, setOptions] = useState([]);
-  const [selectedOption, setSelectedOption] = useState(null);
+  const [defaultOption, setDefaultOption] = useState(null);
   const [loading, setLoading] = useState(true);
 
   const fetchArtists = async () => {
@@ -18,16 +18,12 @@ const ArtistSelect = ({ value, onChange }) => {
     setLoading(false);
   };
 
-  const fetchSelectedArtist = async () => {
-    setSelectedOption(options.find(opt => opt.value === value) || null);
-  };
-
   useEffect(() => {
     fetchArtists();
   }, []);
 
   useEffect(() => {
-    fetchSelectedArtist();
+    setDefaultOption(options.find(opt => opt.value === value) || null);
   }, [options, value]);
 
   return (
@@ -35,7 +31,7 @@ const ArtistSelect = ({ value, onChange }) => {
       <label className="block mb-1">Artista</label>
       <Select
         options={options}
-        value={selectedOption}
+        value={defaultOption}
         onChange={opt => onChange(opt.value)}
         isLoading={loading}
         isSearchable

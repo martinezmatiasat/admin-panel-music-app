@@ -45,22 +45,22 @@ const CreateSong = () => {
       <h2 className="text-2xl font-bold mb-4">Create Song</h2>
       <form className="space-y-4" onSubmit={handleSubmit}>
         <div>
-          <label className="block mb-1">Title</label>
+          <label className="block mb-1">Título</label>
           <input type="text" name="title" value={song.title} onChange={handleChange} className="border border-gray-300 rounded px-3 py-2 w-full" />
         </div>
         <div>
           <ArtistSelect value={song.artist} onChange={handleArtistChange} />
         </div>
         <div>
-          <label className="block mb-1">Duration</label>
+          <label className="block mb-1">Duración</label>
           <input type="text" name="duration" value={song.duration} onChange={handleChange} className="border border-gray-300 rounded px-3 py-2 w-full" />
         </div>
         <div>
-          <label className="block mb-1">Year</label>
+          <label className="block mb-1">Año</label>
           <input type="text" name="year" value={song.year} onChange={handleChange} className="border border-gray-300 rounded px-3 py-2 w-full" />
         </div>
         <div>
-          <label className="block mb-1">File</label>
+          <label className="block mb-1">Archivo</label>
           <input type="file" name="audio" onChange={handleFileChange} className="border border-gray-300 rounded px-3 py-2 w-full" />
         </div>
         <div className="flex items-center gap-2 mt-8">
@@ -68,7 +68,7 @@ const CreateSong = () => {
             <Icon name="save" />
             Guardar
           </button>
-          <button type="button" className="flex items-center gap-2 bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700" onClick={() => navigate('/songs')}>
+          <button type="button" onClick={() => navigate('/songs')} className="flex items-center gap-2 bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700">
             <Icon name="cancel" />
             Cancelar
           </button>

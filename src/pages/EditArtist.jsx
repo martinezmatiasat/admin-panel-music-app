@@ -27,11 +27,11 @@ const EditArtist = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setArtist((artist) => ({ ...artist, [name]: value }));
+    setArtist({ ...artist, [name]: value });
   };
 
   const handleFileChange = (e) => {
-    setArtist((artist) => ({ ...artist, image: e.target.files[0] }));
+    setArtist({ ...artist, image: e.target.files[0] });
   };
 
   const handleSubmit = async (e) => {
@@ -52,47 +52,23 @@ const EditArtist = () => {
       <h2 className="text-2xl font-bold mb-4">Editar Artista</h2>
       <form className="space-y-4" onSubmit={handleSubmit}>
         <div>
-          <label className="block mb-1">Nombre del Artista</label>
-          <input
-            type="text"
-            className="border border-gray-300 rounded px-3 py-2 w-full"
-            value={artist.name}
-            onChange={handleChange}
-            name="name"
-          />
+          <label className="block mb-1">Nombre</label>
+          <input type="text" name="name" value={artist.name} onChange={handleChange} className="border border-gray-300 rounded px-3 py-2 w-full" />
         </div>
         <div>
           <label className="block mb-1">Biografía</label>
-          <textarea
-            className="border border-gray-300 rounded px-3 py-2 w-full"
-            value={artist.description}
-            onChange={handleChange}
-            name="description"
-          />
+          <textarea name="description" value={artist.description} onChange={handleChange} className="border border-gray-300 rounded px-3 py-2 w-full" />
         </div>
         <div>
           <label className="block mb-1">Imagen</label>
-          <input
-            type="file"
-            accept="image/*"
-            className="border border-gray-300 rounded px-3 py-2 w-full"
-            onChange={handleFileChange}
-            name="image"
-          />
+          <input type="file" name="image" accept="image/*" onChange={handleFileChange} className="border border-gray-300 rounded px-3 py-2 w-full" />
         </div>
         <div className="flex items-center gap-2 mt-8">
-          <button
-            type="submit"
-            className="flex items-center gap-2 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700"
-          >
+          <button type="submit" className="flex items-center gap-2 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">
             <Icon name="save" />
             Guardar
           </button>
-          <button
-            type="button"
-            className="flex items-center gap-2 bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700"
-            onClick={() => navigate('/artists')}
-          >
+          <button type="button" onClick={() => navigate('/artists')} className="flex items-center gap-2 bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700">
             <Icon name="cancel" />
             Cancelar
           </button>

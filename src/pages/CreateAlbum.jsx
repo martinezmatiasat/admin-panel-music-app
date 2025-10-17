@@ -4,6 +4,7 @@ import { notifySuccess } from '@/utils/notification';
 import { useNavigate } from 'react-router-dom';
 import Icon from '@/components/Icon';
 import ArtistSelect from '@/components/ArtistSelect';
+import SongSelect from '@/components/SongSelect';
 
 const CreateAlbum = () => {
   const [album, setAlbum] = useState({
@@ -30,11 +31,8 @@ const CreateAlbum = () => {
     setAlbum({ ...album, artist: value });
   };
 
-  const handleSongChange = (index, value) => {
-    setAlbum({ 
-      ...album, 
-      songs: album.songs.map((song, i) => (i === index ? value : song))
-    });
+  const handleSongsChange = (values) => {
+    setAlbum(a => ({ ...a, songs: values }));
   };
 
   const handleSubmit = async (e) => {
@@ -58,63 +56,33 @@ const CreateAlbum = () => {
       <h2 className="text-2xl font-bold mb-4">Crear Álbum</h2>
       <form className="mt-4 space-y-4" onSubmit={handleSubmit}>
         <div>
-          <label className="block mb-1">Nombre del Álbum</label>
-          <input
-            type="text"
-            className="border border-gray-300 rounded px-3 py-2 w-full"
-            value={album.title}
-            onChange={handleChange}
-            name="title"
-          />
+          <label className="block mb-1">Título</label>
+          <input type="text" name="title" value={album.title} onChange={handleChange} className="border border-gray-300 rounded px-3 py-2 w-full" />
         </div>
         <div>
-          <ArtistSelect
-            value={album.artist}
-            onChange={handleArtistChange}
-          />
+          <ArtistSelect value={album.artist} onChange={handleArtistChange} />
         </div>
         <div>
           <label className="block mb-1">Año</label>
-          <input
-            type="text"
-            className="border border-gray-300 rounded px-3 py-2 w-full"
-            value={album.year}
-            onChange={handleChange}
-            name="year"
-          />
+          <input type="text" name="year" value={album.year} onChange={handleChange} className="border border-gray-300 rounded px-3 py-2 w-full" />
         </div>
         <div>
           <label className="block mb-1">Descripción</label>
-          <textarea
-            className="border border-gray-300 rounded px-3 py-2 w-full"
-            value={album.description}
-            onChange={handleChange}
-            name="description"
-          />
+          <textarea name="description" value={album.description} onChange={handleChange} className="border border-gray-300 rounded px-3 py-2 w-full" />
         </div>
         <div>
           <label className="block mb-1">Imagen</label>
-          <input
-            type="file"
-            accept="image/*"
-            className="border border-gray-300 rounded px-3 py-2 w-full"
-            onChange={handleFileChange}
-            name="image"
-          />
+          <input type="file" name="image" accept="image/*" onChange={handleFileChange} className="border border-gray-300 rounded px-3 py-2 w-full" />
+        </div>
+        <div>
+          <SongSelect value={album.songs} onChange={handleSongsChange} />
         </div>
         <div className="flex items-center gap-2 mt-8">
-          <button
-            type="submit"
-            className="flex items-center gap-2 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700"
-          >
+          <button type="submit" className="flex items-center gap-2 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">
             <Icon name="save" />
             Guardar
           </button>
-          <button
-            type="button"
-            className="flex items-center gap-2 bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700"
-            onClick={() => navigate('/albums')}
-          >
+          <button type="button" onClick={() => navigate('/albums')} className="flex items-center gap-2 bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700">
             <Icon name="cancel" />
             Cancelar
           </button>
